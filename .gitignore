@@ -1,0 +1,2 @@
+.env
+./private-gitops/git-repo-secret.yaml

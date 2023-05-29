@@ -1,0 +1,9 @@
+---
+global:
+  image:
+    tag: "v2.6.6"
+
+# tls termination in ingress level
+server:
+  extraArgs:
+    - --insecure
