@@ -105,6 +105,11 @@ cat ~/.ssh/id_ed25519
 touch ~/.ssh/config
 code ~/.ssh/config
 
+Host github.com
+    AddKeysToAgent yes
+    UseKeychain yes
+    IdentityFile ~/.ssh/id_ed25519
+
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 # public key
 cat ~/.ssh/id_ed25519.pub
