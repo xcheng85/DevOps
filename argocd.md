@@ -185,6 +185,9 @@ argocd application and kubernetes deployment living in the same git repo
 
 one argocd application manages all the kubernetes deployment (multiple services)
 
+refer to [here](./evd/application.yaml), which pointed to the apps, which then point to git-helm chart
+
+
 ## finalizer
 
 ## GitOps with Helm Chart
@@ -221,4 +224,39 @@ use default if not created project before
 # metrics allow the kubectl top
 kubectl top pods -n kube-system
 kubectl top nodes
+```
+
+## CI with argocd
+
+update image tag in gitops https://github.com/xcheng85/gitops-test
+
+## CD with argocd image updater
+poll dockerhub registry
+
+two options:
+1. direct update argocd server
+2. git write back (preferrable)
+    a. a new commit
+
+### install image updater
+use terraform
+
+```shell
+
+helm search repo argocd
+
+helm show values argo/argo/argocd-image-updater --version 0.9.1 > argocd-image-update-defaults.yaml
+
+cd terraform
+
+terraform apply -auto-approve
+
+image-updater-argocd-image-updater-6c5996c77b-cbd2f   1/1     Running   0          33s
+
+# check updater logs
+kubectl logs -f -l app.kubernetes.io/instance=image-updater -n argocd
+
+docker tag nginx:1.25.0 taviamcboa/nginx:v0.2.0
+docker push taviamcboa/nginx:v0.2.0
+
 ```
